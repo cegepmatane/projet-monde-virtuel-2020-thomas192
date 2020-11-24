@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Components/SphereComponent.h"
 #include "ProjetMondeVirtuelCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -28,6 +29,8 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+	FORCEINLINE class USphereComponent* getAttrapeur() const { return this->attrapeur;  }
 
 protected:
 
@@ -62,6 +65,12 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface
+
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Cube", meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* attrapeur;
+	UFUNCTION(BlueprintCallable, Category = "Cube")
+	void attraperCube();
 
 public:
 	/** Returns CameraBoom subobject **/

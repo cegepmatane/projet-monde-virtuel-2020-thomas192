@@ -14,4 +14,9 @@ class PROJETMONDEVIRTUEL_API ACubeBleu : public ACube
 {
 	GENERATED_BODY()
 
+public:
+	// Sets default values for this actor's properties
+	ACubeBleu();
+
+	void attraper_Implementation() override;
 };

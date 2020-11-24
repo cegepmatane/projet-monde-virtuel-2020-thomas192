@@ -16,28 +16,47 @@ class PROJETMONDEVIRTUEL_API AApparition : public AActor
 	GENERATED_BODY()
 
 private:
+	/* Box component pour spécifier ou les cubes apparaitront */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Apparition", meta = (AllowPrivateAccess = "true"));
 	class UBoxComponent* zone;
-	UPROPERTY(EditAnywhere, Category = "Apparition")
-	TSubclassOf<class ACube> objetCubeBleu;
-	UPROPERTY(EditAnywhere, Category = "Apparition")
-	TSubclassOf<class ACube> objetCubeRouge;
+
+	/* Gérer l'apparition des cubes */
 	void apparaitre();
 
-public:	
-	// Sets default values for this actor's properties
-	AApparition();
-	FORCEINLINE class UBoxComponent* getZone() const { return this->zone;  }
-	UFUNCTION(BlueprintPure, Category = "Apparition")
-	FVector getPointsAuHasard();
+	/* Délais d'apparition actuel */
+	float delaiApparition;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	/* Les cubes à faire apparaitre */
+	UPROPERTY(EditAnywhere, Category = "Apparition")
+		TSubclassOf<class ACube> objetCubeBleu;
+	UPROPERTY(EditAnywhere, Category = "Apparition")
+		TSubclassOf<class ACube> objetCubeRouge;
+
 	FTimerHandle minuteur;
 
-public:	
+	/* Délai d'apparition minimum */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Apparition")
+	float delaiApparitionMinimum;
+
+	/* Délai d'apparition maximum */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Apparition")
+	float delaiApparitionMaximum;
+
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Sets default values for this actor's properties
+	AApparition();
+
+	/* Retourne le subobject zone */
+	FORCEINLINE class UBoxComponent* getZone() const { return this->zone; }
+
+	/* Générer un point au hasard dans le volume d'apparition */
+	UFUNCTION(BlueprintPure, Category = "Apparition")
+		FVector getPointsAuHasard();
 };

@@ -8,55 +8,69 @@ AApparition::AApparition()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	// Créer le Box Component pour représenter le volume d'apparition
 	this->zone = CreateDefaultSubobject<UBoxComponent>(TEXT("Zone d'apparition"));
 	this->RootComponent = zone;
 
+	// Définir la plage du délai d'apparition
+	delaiApparitionMinimum = 1.0f;
+	delaiApparitionMaximum = 4.5f;
 }
 
 FVector AApparition::getPointsAuHasard()
 {
 	FVector origine = this->getZone()->Bounds.Origin;
 	FVector etendue = this->getZone()->Bounds.BoxExtent;
-	return UKismetMathLibrary::RandomPointInBoundingBox(origine, etendue);
 
+	return UKismetMathLibrary::RandomPointInBoundingBox(origine, etendue);
 }
 
 void AApparition::apparaitre()
 {
+	// Vérifier que le monde est valide
 	UWorld* monde = GetWorld();
+	if (monde != NULL)
+	{
+		// Obtenir un point d'apparition
+		FVector point = this->getPointsAuHasard();
+		// Obtenir une rotation au hasard pour le cube
+		FRotator rotation;
+		rotation.Yaw = FMath::FRand() * 360.0f;
+		rotation.Pitch = FMath::FRand() * 360.0f;
+		rotation.Roll = FMath::FRand() * 360.0f;
+		// Définir les paramètres d'apparition
+		FActorSpawnParameters parametres;
+		parametres.Owner = this;
+		parametres.Instigator = GetInstigator();
+		// Faire apparaitre le cube
+		ACube* const cubeBleuApparu = monde->SpawnActor<ACube>(this->objetCubeBleu, point, rotation, parametres);
 
-	FVector point = this->getPointsAuHasard();
-	FRotator rotation;
-	rotation.Yaw = FMath::FRand() * 360.0f;
-	rotation.Pitch = FMath::FRand() * 360.0f;
-	rotation.Roll = FMath::FRand() * 360.0f;
-	FActorSpawnParameters parametres;
-	parametres.Owner = this;
-	parametres.Instigator = GetInstigator();
+		point = this->getPointsAuHasard();
+		rotation.Yaw = FMath::FRand() * 360.0f;
+		rotation.Pitch = FMath::FRand() * 360.0f;
+		rotation.Roll = FMath::FRand() * 360.0f;
+		parametres.Instigator = GetInstigator();
 
-	monde->SpawnActor<ACube>(this->objetCubeBleu, point, rotation, parametres);
-
-	point = this->getPointsAuHasard();
-	rotation.Yaw = FMath::FRand() * 360.0f;
-	rotation.Pitch = FMath::FRand() * 360.0f;
-	rotation.Roll = FMath::FRand() * 360.0f;
-	parametres.Instigator = GetInstigator();
-
-	monde->SpawnActor<ACube>(this->objetCubeRouge, point, rotation, parametres);
+		ACube* const cubeRougeApparu = monde->SpawnActor<ACube>(this->objetCubeRouge, point, rotation, parametres);
+	
+		delaiApparition = FMath::FRandRange(delaiApparitionMinimum, delaiApparitionMaximum);
+		GetWorldTimerManager().SetTimer(minuteur, this, &AApparition::apparaitre, delaiApparition, false);
+	}
 }
 
 // Called when the game starts or when spawned
 void AApparition::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorldTimerManager().SetTimer(minuteur, this, &AApparition::apparaitre, 4.0f, true);
-	
+
+	delaiApparition = FMath::FRandRange(delaiApparitionMinimum, delaiApparitionMaximum);
+	GetWorldTimerManager().SetTimer(minuteur, this, &AApparition::apparaitre, delaiApparition, false);
 }
 
 // Called every frame
 void AApparition::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Cube.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AProjetMondeVirtuelCharacter
@@ -45,6 +46,10 @@ AProjetMondeVirtuelCharacter::AProjetMondeVirtuelCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+	
+	this->attrapeur = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere de cueillette"));
+	this->attrapeur->AttachTo(this->RootComponent);
+	this->attrapeur->SetSphereRadius(200.f);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -74,6 +79,9 @@ void AProjetMondeVirtuelCharacter::SetupPlayerInputComponent(class UInputCompone
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AProjetMondeVirtuelCharacter::OnResetVR);
+
+	// Cube
+	PlayerInputComponent->BindAction("Attraper", IE_Pressed, this, &AProjetMondeVirtuelCharacter::attraperCube);
 }
 
 
@@ -130,5 +138,20 @@ void AProjetMondeVirtuelCharacter::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+	}
+}
+
+void AProjetMondeVirtuelCharacter::attraperCube()
+{
+	UE_LOG(LogClass, Log, TEXT("AProjetMondeVirtuelCharacter::attraperCube()"))
+
+	TArray<AActor*> cubes;
+	this->attrapeur->GetOverlappingActors(cubes);
+
+	for (int32 position = 0; position < cubes.Num(); position++)
+	{
+		AActor* acteur = cubes[position];
+		ACube* cube = Cast<ACube>(acteur);
+		if (cube) cube->attraper(); // && !cube->IsPendingKill())
 	}
 }
