@@ -9,6 +9,9 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Cube.h"
+#include "CubeVert.h"
+#include "CubeRouge.h"
+#include "CubeBleu.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AProjetMondeVirtuelCharacter
@@ -47,9 +50,14 @@ AProjetMondeVirtuelCharacter::AProjetMondeVirtuelCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 	
+	// Créer la sphère d'attrapage
 	this->attrapeur = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere de cueillette"));
 	this->attrapeur->AttachTo(this->RootComponent);
 	this->attrapeur->SetSphereRadius(200.f);
+
+	// Définir la vie initiale du personnage
+	vieInitiale = 100.f;
+	viePersonnage = vieInitiale;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -145,13 +153,88 @@ void AProjetMondeVirtuelCharacter::attraperCube()
 {
 	UE_LOG(LogClass, Log, TEXT("AProjetMondeVirtuelCharacter::attraperCube()"))
 
+	// Récupérer les acteurs à l'intérieur de l'attrapeur et les stocker dans une liste
 	TArray<AActor*> cubes;
 	this->attrapeur->GetOverlappingActors(cubes);
 
+	// Garder trace des bonus collectés
+	float vieCollectee = 0;
+	float bonusVitesseCollecte = 0;
+	float bonusSautCollecte = 0;
+
+	// Pour chaque acteur récupéré vérifier que c'est un cube
 	for (int32 position = 0; position < cubes.Num(); position++)
 	{
 		AActor* acteur = cubes[position];
 		ACube* cube = Cast<ACube>(acteur);
-		if (cube) cube->attraper(); // && !cube->IsPendingKill())
+
+		// Si c'est un cube et qu'il est valide et actif
+		if (cube && !cube->IsPendingKill() && cube->estActif())
+		{
+			cube->attraper();
+			// Vérifier si le cube est un cube vert
+			ACubeVert* const cubeVert = Cast<ACubeVert>(cube);
+			if (cubeVert)
+			{
+				vieCollectee += cubeVert->getBonus();
+			}
+			// Vérifier si le cube est un cube rouge
+			ACubeRouge* const cubeRouge = Cast<ACubeRouge>(cube);
+			if (cubeRouge)
+			{
+				bonusVitesseCollecte += cubeRouge->getBonus();
+			}
+			cube->setActif(false);
+			// Vérifier si le cube est un cube bleu
+			ACubeBleu* const cubeBleu = Cast<ACubeBleu>(cube);
+			if (cubeBleu)
+			{
+				bonusSautCollecte += cubeBleu->getBonus();
+			}
+			cube->setActif(false);
+		}
 	}
+	// Mise a jour du personnage en fonction des bonus collectés
+	if (vieCollectee > 0)
+	{
+		this->mettreAJourViePersonnage(vieCollectee);
+	}
+	if (bonusVitesseCollecte > 0)
+	{
+		this->mettreAJourVitessePersonnage(bonusVitesseCollecte);
+	}
+	if (bonusVitesseCollecte > 0)
+	{
+		this->mettreAJourSautPersonnage(bonusSautCollecte);
+	}
+}
+
+// Retourne la vie initiale
+float AProjetMondeVirtuelCharacter::getVieInitiale()
+{
+	return this->vieInitiale;
+}
+
+// Retourne la vie actuelle du personnage
+float AProjetMondeVirtuelCharacter::getVieActuelle()
+{
+	return this->viePersonnage;
+}
+
+// Met à jour la vie du personnage
+void AProjetMondeVirtuelCharacter::mettreAJourViePersonnage(float variationVie)
+{
+	this->viePersonnage = this->viePersonnage + variationVie;
+}
+
+// Met à jour la vitesse du personnage
+void AProjetMondeVirtuelCharacter::mettreAJourVitessePersonnage(float variationVitesse)
+{
+	this->GetCharacterMovement()->MaxWalkSpeed += variationVitesse;
+}
+
+// Met à jour la vitesse du personnage
+void AProjetMondeVirtuelCharacter::mettreAJourSautPersonnage(float variationSaut)
+{
+	this->GetCharacterMovement()->JumpZVelocity += variationSaut;
 }

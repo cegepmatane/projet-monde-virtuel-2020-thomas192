@@ -35,16 +35,18 @@ protected:
 		TSubclassOf<class ACube> objetCubeBleu;
 	UPROPERTY(EditAnywhere, Category = "Apparition")
 		TSubclassOf<class ACube> objetCubeRouge;
+	UPROPERTY(EditAnywhere, Category = "Apparition")
+		TSubclassOf<class ACube> objetCubeVert;
 
 	FTimerHandle minuteur;
 
 	/* Délai d'apparition minimum */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Apparition")
-	float delaiApparitionMinimum;
+		float delaiApparitionMinimum;
 
 	/* Délai d'apparition maximum */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Apparition")
-	float delaiApparitionMaximum;
+		float delaiApparitionMaximum;
 
 public:
 	// Called every frame

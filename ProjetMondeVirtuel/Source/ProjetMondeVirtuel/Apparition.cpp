@@ -14,8 +14,8 @@ AApparition::AApparition()
 	this->RootComponent = zone;
 
 	// Définir la plage du délai d'apparition
-	delaiApparitionMinimum = 1.0f;
-	delaiApparitionMaximum = 4.5f;
+	this->delaiApparitionMinimum = 2.0f;
+	this->delaiApparitionMaximum = 7.0f;
 }
 
 FVector AApparition::getPointsAuHasard()
@@ -32,6 +32,7 @@ void AApparition::apparaitre()
 	UWorld* monde = GetWorld();
 	if (monde != NULL)
 	{
+		// Apparition CubeBleu
 		// Obtenir un point d'apparition
 		FVector point = this->getPointsAuHasard();
 		// Obtenir une rotation au hasard pour le cube
@@ -46,14 +47,23 @@ void AApparition::apparaitre()
 		// Faire apparaitre le cube
 		ACube* const cubeBleuApparu = monde->SpawnActor<ACube>(this->objetCubeBleu, point, rotation, parametres);
 
+		// Apparition CubeRouge
 		point = this->getPointsAuHasard();
 		rotation.Yaw = FMath::FRand() * 360.0f;
 		rotation.Pitch = FMath::FRand() * 360.0f;
 		rotation.Roll = FMath::FRand() * 360.0f;
 		parametres.Instigator = GetInstigator();
-
 		ACube* const cubeRougeApparu = monde->SpawnActor<ACube>(this->objetCubeRouge, point, rotation, parametres);
-	
+
+		// Apparition CubeVert
+		point = this->getPointsAuHasard();
+		rotation.Yaw = FMath::FRand() * 360.0f;
+		rotation.Pitch = FMath::FRand() * 360.0f;
+		rotation.Roll = FMath::FRand() * 360.0f;
+		parametres.Instigator = GetInstigator();
+		ACube* const cubeVertApparu = monde->SpawnActor<ACube>(this->objetCubeVert, point, rotation, parametres);
+		
+		// On rappelle la fonction
 		delaiApparition = FMath::FRandRange(delaiApparitionMinimum, delaiApparitionMaximum);
 		GetWorldTimerManager().SetTimer(minuteur, this, &AApparition::apparaitre, delaiApparition, false);
 	}

@@ -1,18 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "CubeBleu.h"
+#include "CubeVert.h"
 
 // Sets default values for this actor's properties
-ACubeBleu::ACubeBleu()
+ACubeVert::ACubeVert()
 {
 	this->getMailles()->SetSimulatePhysics(false);
 	this->getMailles()->SetCastShadow(false);
 
-	this->bonus = 50.0f;
+	this->bonus = 10.0f;
 }
 
-void ACubeBleu::attraper_Implementation()
+void ACubeVert::attraper_Implementation()
 {
 	// Utiliser le comportement de base
 	Super::attraper_Implementation();

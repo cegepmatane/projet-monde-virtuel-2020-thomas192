@@ -15,9 +15,6 @@ ACube::ACube()
 	/* Créer le composant static mesh */
 	this->mailles = CreateAbstractDefaultSubobject<UStaticMeshComponent>(TEXT("Maille cube"));
 	this->RootComponent = this->mailles;
-
-	this->getMailles()->SetSimulatePhysics(true);
-	this->getMailles()->SetCastShadow(false);
 }
 
 void ACube::attraper_Implementation()
@@ -51,8 +48,14 @@ void ACube::Tick(float DeltaTime)
 
 }
 
+// Retourne le bonus du cube
+float ACube::getBonus()
+{
+	return this->bonus;
+}
+
+// Multiplie le bonus du cube
 void ACube::multiplierBonus(int multiplier)
 {
 	this->bonus = multiplier * this->bonus;
 }
-
