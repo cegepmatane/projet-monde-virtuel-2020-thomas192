@@ -224,7 +224,10 @@ float AProjetMondeVirtuelCharacter::getVieActuelle()
 // Met à jour la vie du personnage
 void AProjetMondeVirtuelCharacter::mettreAJourViePersonnage(float variationVie)
 {
-	this->viePersonnage = this->viePersonnage + variationVie;
+	if ((this->viePersonnage + variationVie) > this->vieInitiale)
+		this->viePersonnage = this->vieInitiale;
+	else
+		this->viePersonnage = this->viePersonnage + variationVie;
 }
 
 // Met à jour la vitesse du personnage

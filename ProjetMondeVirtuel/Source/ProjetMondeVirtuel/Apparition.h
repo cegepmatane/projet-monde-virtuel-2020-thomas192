@@ -58,7 +58,11 @@ public:
 	/* Retourne le subobject zone */
 	FORCEINLINE class UBoxComponent* getZone() const { return this->zone; }
 
-	/* Générer un point au hasard dans le volume d'apparition */
+	/* Génére un point au hasard dans le volume d'apparition */
 	UFUNCTION(BlueprintPure, Category = "Apparition")
 		FVector getPointsAuHasard();
+
+	/** Active ou désactive l'apparition */
+	UFUNCTION(BlueprintCallable, Category = "Apparition")
+		void setApparitionActive(bool bDevraitApparaitre);
 };

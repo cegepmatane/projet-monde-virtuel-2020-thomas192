@@ -26,6 +26,21 @@ FVector AApparition::getPointsAuHasard()
 	return UKismetMathLibrary::RandomPointInBoundingBox(origine, etendue);
 }
 
+void AApparition::setApparitionActive(bool bDevraitApparaitre)
+{
+	if (bDevraitApparaitre)
+	{
+		// Définir le minuteur de l'apparition
+		delaiApparition = FMath::FRandRange(delaiApparitionMinimum, delaiApparitionMaximum);
+		GetWorldTimerManager().SetTimer(minuteur, this, &AApparition::apparaitre, delaiApparition, false);
+	}
+	else
+	{
+		// Retirer le minuteur
+		GetWorldTimerManager().ClearTimer(minuteur);
+	}
+}
+
 void AApparition::apparaitre()
 {
 	// Vérifier que le monde est valide
@@ -73,9 +88,6 @@ void AApparition::apparaitre()
 void AApparition::BeginPlay()
 {
 	Super::BeginPlay();
-
-	delaiApparition = FMath::FRandRange(delaiApparitionMinimum, delaiApparitionMaximum);
-	GetWorldTimerManager().SetTimer(minuteur, this, &AApparition::apparaitre, delaiApparition, false);
 }
 
 // Called every frame

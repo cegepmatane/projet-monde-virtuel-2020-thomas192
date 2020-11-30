@@ -9,7 +9,7 @@ ACubeBleu::ACubeBleu()
 	this->getMailles()->SetSimulatePhysics(false);
 	this->getMailles()->SetCastShadow(false);
 
-	this->bonus = 50.0f;
+	this->bonus = 100.0f;
 }
 
 void ACubeBleu::attraper_Implementation()

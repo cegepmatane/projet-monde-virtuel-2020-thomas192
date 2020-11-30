@@ -9,7 +9,7 @@ ACubeVert::ACubeVert()
 	this->getMailles()->SetSimulatePhysics(false);
 	this->getMailles()->SetCastShadow(false);
 
-	this->bonus = 10.0f;
+	this->bonus = 30.0f;
 }
 
 void ACubeVert::attraper_Implementation()
