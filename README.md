@@ -4,4 +4,16 @@ Thomas Saudemont
 
 ## Sujet
 
-Le joueur peut attraper des cubes bleus (classe dérivée CubeBleu) et des cubes rouges (classe dérivée CubeRouge). Plus le joueur attrape de cubes, plus leur taille diminue. Une fois attrapés, les cubes bleus permettent au joueur de sauter plus haut et les cubes rouges de se déplacer plus rapidement. A terme, les cubes voleront dans la scène de jeu compliquant ainsi la tâche au joueur.
+Le but du jeu est de survivre le plus longtemps possible. La vie du joueur baisse sans cesse, mais il peut regagner de la vie en attrapant des cubes verts. Il peut également attraper des cubes bleus et des cubes rouges, augmentant respectivement sa hauteur de saut et sa vitesse de déplacement. Le délais d'apparition des cubes varie légèrement d'une fois sur l'autre.
+
+<img src="ScreenshotEnJeu.png" style="zoom:75%;" />
+
+## Programmation graphique
+
+![](CubeBordsLumineuxMaterial.png)
+
+## Ressources
+
+les classes C++ sont disponibles dans le répertoire GitHub.
+
+Lien vers l'intégralité du projet : 
