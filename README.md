@@ -14,6 +14,6 @@ Le but du jeu est de survivre le plus longtemps possible. La vie du joueur baiss
 
 ## Ressources
 
-les classes C++ sont disponibles dans le répertoire GitHub.
+Les classes C++ sont disponibles dans le répertoire GitHub.
 
-Lien vers l'intégralité du projet : 
+Lien vers l'intégralité du projet : https://drive.google.com/drive/folders/12RWivsP76Td7B90MbPdsj4M_yt8Z2Vzf?usp=sharing
