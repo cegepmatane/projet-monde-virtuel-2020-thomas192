@@ -12,6 +12,7 @@
 #include "CubeVert.h"
 #include "CubeRouge.h"
 #include "CubeBleu.h"
+#include "CubeCharacter.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AProjetMondeVirtuelCharacter
@@ -162,7 +163,7 @@ void AProjetMondeVirtuelCharacter::attraperCube()
 	float bonusVitesseCollecte = 0;
 	float bonusSautCollecte = 0;
 
-	// Pour chaque acteur récupéré vérifier que c'est un cube
+	// Pour chaque acteur récupéré vérifier si c'est un cube
 	for (int32 position = 0; position < cubes.Num(); position++)
 	{
 		AActor* acteur = cubes[position];
@@ -209,19 +210,43 @@ void AProjetMondeVirtuelCharacter::attraperCube()
 	}
 }
 
-// Retourne la vie initiale
+void AProjetMondeVirtuelCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	// Récupérer les acteurs à l'intérieur de l'attrapeur et les stocker dans une liste
+	TArray<AActor*> cubes;
+	this->attrapeur->GetOverlappingActors(cubes);
+
+	// Pour chaque acteur récupéré vérifier si c'est un CubeCharacter
+	for (int32 position = 0; position < cubes.Num(); position++)
+	{
+		AActor* acteur = cubes[position];
+		ACubeCharacter* cubeCharacter = Cast<ACubeCharacter>(acteur);
+		// Si c'est un CubeCharacter
+		if (cubeCharacter)
+		{
+			UE_LOG(LogClass, Log, TEXT("Touche par le cube ennemi"))
+			
+			cubeCharacter->toucher();
+			this->mettreAJourViePersonnage(-cubeCharacter->getDegats());
+		}
+	}
+}
+
+/** Retourne la vie initiale */
 float AProjetMondeVirtuelCharacter::getVieInitiale()
 {
 	return this->vieInitiale;
 }
 
-// Retourne la vie actuelle du personnage
+/** Retourne la vie actuelle du personnage */
 float AProjetMondeVirtuelCharacter::getVieActuelle()
 {
 	return this->viePersonnage;
 }
 
-// Met à jour la vie du personnage
+/** Met à jour la vie du personnage */
 void AProjetMondeVirtuelCharacter::mettreAJourViePersonnage(float variationVie)
 {
 	if ((this->viePersonnage + variationVie) > this->vieInitiale)
@@ -230,13 +255,13 @@ void AProjetMondeVirtuelCharacter::mettreAJourViePersonnage(float variationVie)
 		this->viePersonnage = this->viePersonnage + variationVie;
 }
 
-// Met à jour la vitesse du personnage
+/** Met à jour la vitesse du personnage */
 void AProjetMondeVirtuelCharacter::mettreAJourVitessePersonnage(float variationVitesse)
 {
 	this->GetCharacterMovement()->MaxWalkSpeed += variationVitesse;
 }
 
-// Met à jour la vitesse du personnage
+/** Met à jour la vitesse du personnage */
 void AProjetMondeVirtuelCharacter::mettreAJourSautPersonnage(float variationSaut)
 {
 	this->GetCharacterMovement()->JumpZVelocity += variationSaut;
