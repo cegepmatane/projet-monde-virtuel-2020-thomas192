@@ -7,6 +7,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Apparition.h"
 #include "GameFramework/PawnMovementComponent.h"
+#include "GameFramework/GameState.h"
 
 AProjetMondeVirtuelGameMode::AProjetMondeVirtuelGameMode()
 {
@@ -65,9 +66,10 @@ void AProjetMondeVirtuelGameMode::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	this->tempsEcoule = GetWorld()->GetTimeSeconds();
 	// Vérifie si on utilise le personnage du projet
 	AProjetMondeVirtuelCharacter* personnage = Cast<AProjetMondeVirtuelCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
-	if (personnage)
+	if (personnage && this->getEtatActuel() != EEtatJeu::EFini)
 	{
 		// Si le personnage a encore de la vie
 		if (personnage->getVieActuelle() > 0)
@@ -77,9 +79,20 @@ void AProjetMondeVirtuelGameMode::Tick(float DeltaTime)
 		}
 		else
 		{
+			this->tempsPartie = this->tempsEcoule;
 			setEtatActuel(EEtatJeu::EFini);
 		}
 	}
+}
+
+float AProjetMondeVirtuelGameMode::getTempsEcoule()
+{
+	return this->tempsEcoule;
+}
+
+float AProjetMondeVirtuelGameMode::getTempsPartie()
+{
+	return this->tempsPartie;
 }
 
 EEtatJeu AProjetMondeVirtuelGameMode::getEtatActuel() const
@@ -129,6 +142,7 @@ void AProjetMondeVirtuelGameMode::gererNouvelEtat(EEtatJeu nouvelEtat)
 			ACharacter* personnage = UGameplayStatics::GetPlayerCharacter(this, 0);
 			if (personnage)
 			{
+				UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.15);
 				personnage->GetMesh()->SetSimulatePhysics(true);
 				personnage->GetMovementComponent()->MovementState.bCanJump = false;
 			}

@@ -40,6 +40,14 @@ protected:
 	UPROPERTY()
 		class UUserWidget* widgetActuel;
 
+	/** Temps écoulé depuis le début du jeu */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Partie", Meta = (AllowPrivateAccess = "true"))
+		float tempsEcoule;
+
+	/** Temps écoulé entre le début du jeu et la fin de la mort du joueur */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Partie", Meta = (AllowPrivateAccess = "true"))
+		float tempsPartie;
+
 private:
 	/** Gère les appels de fonction qui dépendent du changement d'état de jeu */
 	void gererNouvelEtat(EEtatJeu nouvelEtat);
@@ -54,6 +62,12 @@ public:
 	/** Retourne l'état de jeu actuel */
 	UFUNCTION(BlueprintPure, Category = "Cube")
 		EEtatJeu getEtatActuel() const;
+
+	UFUNCTION(BlueprintPure, Category = "Partie")
+		float getTempsEcoule();
+
+	UFUNCTION(BlueprintPure, Category = "Partie")
+		float getTempsPartie();
 
 	/** Définit l'état de jeu actuel */
 	void setEtatActuel(EEtatJeu nouvelEtat);
