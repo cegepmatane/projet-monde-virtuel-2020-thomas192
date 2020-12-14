@@ -83,6 +83,10 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Vie")
 		float vieInitiale;
 
+	/** Nombre de cubes verts attrapés */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Vie", meta = (AllowPrivateAccess = "true"))
+		uint8 nombreCubeVertAttrape;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -100,6 +104,10 @@ public:
 	/** Accesseur de la vie actuelle du personnage */
 	UFUNCTION(BlueprintPure, Category = "Vie")
 		float getVieActuelle();
+
+	/** Retourne le nombre de cubes verts attrapés */
+	UFUNCTION(BlueprintPure, Category = "Vie")
+		uint8 getNombreCubeVertAttrape();
 
 	/**
 	Met à jour la vie du personnage
@@ -121,5 +129,9 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Mouvement")
 		void mettreAJourSautPersonnage(float variationSaut);
+
+	/** Met à jour le nombre de cubes verts attrapés */
+	UFUNCTION(BlueprintCallable, Category = "Vie")
+		void mettreAJourNombreCubeVertAttrape(uint8 variationNombre);
 };
 

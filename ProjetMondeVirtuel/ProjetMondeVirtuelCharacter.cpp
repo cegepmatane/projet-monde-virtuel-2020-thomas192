@@ -59,6 +59,8 @@ AProjetMondeVirtuelCharacter::AProjetMondeVirtuelCharacter()
 	// Définir la vie initiale du personnage
 	vieInitiale = 100.f;
 	viePersonnage = vieInitiale;
+
+	this->nombreCubeVertAttrape = 1;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -178,6 +180,7 @@ void AProjetMondeVirtuelCharacter::attraperCube()
 			if (cubeVert)
 			{
 				vieCollectee += cubeVert->getBonus();
+				this->mettreAJourNombreCubeVertAttrape(1);
 			}
 			// Vérifier si le cube est un cube rouge
 			ACubeRouge* const cubeRouge = Cast<ACubeRouge>(cube);
@@ -246,6 +249,12 @@ float AProjetMondeVirtuelCharacter::getVieActuelle()
 	return this->viePersonnage;
 }
 
+/** Retourne le nombre de cubes verts attrapés */
+uint8 AProjetMondeVirtuelCharacter::getNombreCubeVertAttrape()
+{
+	return this->nombreCubeVertAttrape;
+}
+
 /** Met à jour la vie du personnage */
 void AProjetMondeVirtuelCharacter::mettreAJourViePersonnage(float variationVie)
 {
@@ -265,4 +274,10 @@ void AProjetMondeVirtuelCharacter::mettreAJourVitessePersonnage(float variationV
 void AProjetMondeVirtuelCharacter::mettreAJourSautPersonnage(float variationSaut)
 {
 	this->GetCharacterMovement()->JumpZVelocity += variationSaut;
+}
+
+/** Met à jour le nombre de cubes verts attrapés */
+void AProjetMondeVirtuelCharacter::mettreAJourNombreCubeVertAttrape(uint8 variationNombre)
+{
+	this->nombreCubeVertAttrape += variationNombre;
 }

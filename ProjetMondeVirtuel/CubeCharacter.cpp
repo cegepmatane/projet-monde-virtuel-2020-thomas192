@@ -23,6 +23,11 @@ void ACubeCharacter::toucher()
 	Destroy();
 }
 
+void ACubeCharacter::mettreAJourVitesseCubeEnnemi(float variationVitesse)
+{
+	this->GetCharacterMovement()->MaxWalkSpeed += variationVitesse;
+}
+
 float ACubeCharacter::getDegats()
 {
 	return this->degats;
@@ -47,10 +52,5 @@ void ACubeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-}
-
-void ACubeCharacter::mettreAJourVitesseCubeEnnemi(float variationVitesse) 
-{
-	this->GetCharacterMovement()->MaxWalkSpeed += variationVitesse;
 }
 
