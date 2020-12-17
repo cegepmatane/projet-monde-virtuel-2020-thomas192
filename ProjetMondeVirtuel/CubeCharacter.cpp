@@ -3,6 +3,8 @@
 
 #include "CubeCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "CubeIntelligence.h"
+#include "Kismet/GameplayStatics.h"
 
 
 
@@ -20,6 +22,20 @@ ACubeCharacter::ACubeCharacter()
 
 void ACubeCharacter::toucher()
 {
+	/*
+	FActorSpawnParameters parametres;
+	parametres.Template = this;
+	parametres.Template->SetActorLocation(FVector(2059.0, 0, 236.0));
+	// ACubeCharacter* temp = GetWorld()->SpawnActor<class ACubeCharacter>(FVector(2059.0, 0, 236.0), FRotator(0, 0, 0), parametres);
+	ACubeCharacter* temp = GetWorld()->SpawnActor<class ACubeCharacter>(GetClass(), parametres);
+	if (temp) {
+		UE_LOG(LogClass, Log, TEXT("true"))
+		temp->SetOwner(GetOwner());
+		temp->AIControllerClass = ACubeIntelligence::StaticClass();
+		UGameplayStatics::FinishSpawningActor(temp, parametres.Template->GetTransform());
+		temp->SpawnDefaultController();
+	}
+	*/
 	Destroy();
 }
 

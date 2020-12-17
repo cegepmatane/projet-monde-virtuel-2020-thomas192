@@ -8,6 +8,8 @@
 #include "Apparition.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "GameFramework/GameState.h"
+#include "CitationDAO.h"
+
 
 AProjetMondeVirtuelGameMode::AProjetMondeVirtuelGameMode()
 {
@@ -20,6 +22,9 @@ AProjetMondeVirtuelGameMode::AProjetMondeVirtuelGameMode()
 
 	// Taux de perte de vie du personnage
 	tauxPerteVie = 0.015f;
+
+	ACitationDAO* citationDAO = CreateDefaultSubobject<ACitationDAO>(TEXT("DAO"));
+	citationDAO->demanderCitation();
 }
 
 void AProjetMondeVirtuelGameMode::BeginPlay()

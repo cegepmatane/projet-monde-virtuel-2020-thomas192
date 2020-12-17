@@ -19,7 +19,7 @@ EBTNodeResult::Type UTacheSuivre::ExecuteTask(UBehaviorTreeComponent& proprietai
 
 	if (cible)
 	{
-		UE_LOG(LogClass, Log, TEXT("Bouge vers ennemi"))
+		// UE_LOG(LogClass, Log, TEXT("Bouge vers ennemi"))
 		cubeIntelligence->MoveToActor(cible, 100.f, true, true, true, 0, true);
 		return EBTNodeResult::Succeeded;
 	}

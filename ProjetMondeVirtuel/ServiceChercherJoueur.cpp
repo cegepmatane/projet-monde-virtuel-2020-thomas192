@@ -26,7 +26,7 @@ void UServiceChercherJoueur::TickNode(UBehaviorTreeComponent& proprietaire, uint
 		AProjetMondeVirtuelCharacter* cible = Cast<AProjetMondeVirtuelCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 		if (cible)
 		{
-			UE_LOG(LogClass, Log, TEXT("Cible trouvee"))
+			// UE_LOG(LogClass, Log, TEXT("Cible trouvee"))
 			proprietaire.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Object>(cubeIntelligence->cleCube, cible);
 		}
 	}
