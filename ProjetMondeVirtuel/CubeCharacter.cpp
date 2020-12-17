@@ -36,7 +36,8 @@ void ACubeCharacter::toucher()
 		temp->SpawnDefaultController();
 	}
 	*/
-	Destroy();
+	this->SetActorLocation(FVector(2059.0, 0, 236.0));
+	// Destroy();
 }
 
 void ACubeCharacter::mettreAJourVitesseCubeEnnemi(float variationVitesse)

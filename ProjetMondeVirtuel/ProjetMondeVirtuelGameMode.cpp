@@ -80,7 +80,7 @@ void AProjetMondeVirtuelGameMode::Tick(float DeltaTime)
 		if (personnage->getVieActuelle() > 0)
 		{
 			// Réduit la vie du personnage en utilisant le taux de perte
-			personnage->mettreAJourViePersonnage(-DeltaTime * tauxPerteVie * (personnage->getVieInitiale()) * (personnage->getNombreCubeVertAttrape()));
+			personnage->mettreAJourViePersonnage(-DeltaTime * tauxPerteVie * (personnage->getVieInitiale()) * (personnage->getNombreCubeVertAttrape() + 1));
 		}
 		else
 		{

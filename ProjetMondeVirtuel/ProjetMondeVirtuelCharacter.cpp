@@ -60,7 +60,7 @@ AProjetMondeVirtuelCharacter::AProjetMondeVirtuelCharacter()
 	vieInitiale = 100.f;
 	viePersonnage = vieInitiale;
 
-	this->nombreCubeVertAttrape = 1;
+	this->nombreCubeVertAttrape = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////
