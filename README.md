@@ -12,6 +12,54 @@ Le but du jeu est de survivre le plus longtemps possible. La vie du joueur baiss
 
 ![](CubeBordsLumineuxMaterial.png)
 
+## Acteurs
+
+### CitationBlueprint
+
+![](citationblueprint.png)
+
+### TempsEcouleBlueprint
+
+![](tempsecouleblueprint.png)
+
+## Widgets
+
+### VieHUD
+
+<img src="viehud.png" style="zoom:50%;" />
+
+#### Barre de vie
+
+![](viehud_barredevie.png)
+
+#### Nombre de cubes verts attrapés
+
+![](viehud_nombrecubesvertsattrapes.png)
+
+#### Temps de survie
+
+![](viehud_tempsdesurvie.png)
+
+#### Visibilité de l'image game over
+
+![](viehud_visibiliteimagegameover.png)
+
+### InstructionsHUD
+
+<img src="insctructionshud.png" style="zoom:50%;" />
+
+#### ZoneInstructionsBlueprint
+
+![](zoneinstructionsblueprint.png)
+
+### AideHUD
+
+<img src="aidehud.png" style="zoom:50%;" />
+
+#### LevelBlueprint
+
+![](levelblueprint.png)
+
 ## Ressources
 
 Les classes C++ sont disponibles dans le répertoire GitHub.
