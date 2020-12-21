@@ -49,11 +49,11 @@ void AProjetMondeVirtuelGameMode::BeginPlay()
 	// On est en jeu quand le jeu commence
 	setEtatActuel(EEtatJeu::EEnJeu);
 
-	// Vérifie si on utilise le personnage du projet
+	// Vérifier si on utilise le personnage du projet
 	AProjetMondeVirtuelCharacter* personnage = Cast<AProjetMondeVirtuelCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
 	if (personnage)
 	{
-		// Vérifie qu'on a bien défini la variable classeWidgetHUD
+		// Vérifier qu'on a bien défini la variable classeWidgetHUD
 		if (this->classeWidgetHUD != nullptr)
 		{
 			// Créer le widget

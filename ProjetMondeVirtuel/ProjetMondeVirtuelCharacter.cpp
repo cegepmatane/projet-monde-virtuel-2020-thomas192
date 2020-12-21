@@ -207,7 +207,7 @@ void AProjetMondeVirtuelCharacter::attraperCube()
 	{
 		this->mettreAJourVitessePersonnage(bonusVitesseCollecte);
 	}
-	if (bonusVitesseCollecte > 0)
+	if (bonusSautCollecte > 0)
 	{
 		this->mettreAJourSautPersonnage(bonusSautCollecte);
 	}
@@ -274,6 +274,8 @@ void AProjetMondeVirtuelCharacter::mettreAJourVitessePersonnage(float variationV
 void AProjetMondeVirtuelCharacter::mettreAJourSautPersonnage(float variationSaut)
 {
 	this->GetCharacterMovement()->JumpZVelocity += variationSaut;
+	float temp = this->GetCharacterMovement()->JumpZVelocity;
+	UE_LOG(LogClass, Error, TEXT("%f"), temp)
 }
 
 /** Met à jour le nombre de cubes verts attrapés */
